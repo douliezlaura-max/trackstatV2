@@ -1,0 +1,183 @@
+{
+  "title": "Comet Tracker profile stats",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "adopt_me": {
+      "description": "Adopt Me accounts keyed by Roblox user id",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^\\d+$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "bucks": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Bucks balance"
+          },
+          "pets": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Number of pets in inventory"
+          },
+          "eggs": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Number of unhatched eggs in inventory"
+          }
+        },
+        "required": [
+          "bucks",
+          "pets",
+          "eggs"
+        ],
+        "additionalProperties": false,
+        "description": "Adopt Me stats"
+      }
+    },
+    "blox_fruits": {
+      "description": "Blox Fruits accounts keyed by Roblox user id",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^\\d+$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "beli": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Beli balance"
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Player level (card shows the highest across accounts)"
+          },
+          "god_human": {
+            "type": "boolean",
+            "description": "Owns the Godhuman fighting style"
+          },
+          "cdk": {
+            "type": "boolean",
+            "description": "Owns Cursed Dual Katana"
+          },
+          "sanguine_art": {
+            "type": "boolean",
+            "description": "Owns the Sanguine Art fighting style"
+          }
+        },
+        "required": [
+          "beli",
+          "level",
+          "god_human",
+          "cdk",
+          "sanguine_art"
+        ],
+        "additionalProperties": false,
+        "description": "Blox Fruits stats"
+      }
+    },
+    "pet_simulator_99": {
+      "description": "Pet Simulator 99 accounts keyed by Roblox user id",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^\\d+$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "diamonds": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Diamonds balance"
+          },
+          "pets": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Number of pets in inventory"
+          },
+          "huges": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Number of Huge pets"
+          },
+          "rank": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Player rank (card shows the highest across accounts)"
+          }
+        },
+        "required": [
+          "diamonds",
+          "pets",
+          "huges",
+          "rank"
+        ],
+        "additionalProperties": false,
+        "description": "Pet Simulator 99 stats"
+      }
+    },
+    "anime_adventures": {
+      "description": "Anime Adventures accounts keyed by Roblox user id",
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^\\d+$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "gems": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Gems balance"
+          },
+          "gold": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Gold balance"
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Player level (card shows the highest across accounts)"
+          },
+          "units": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "Number of units owned"
+          }
+        },
+        "required": [
+          "gems",
+          "gold",
+          "level",
+          "units"
+        ],
+        "additionalProperties": false,
+        "description": "Anime Adventures stats"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "description": "All tracked game stats for one Comet Tracker user"
+}
