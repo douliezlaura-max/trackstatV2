@@ -1,0 +1,76 @@
+// Comet Tracker data model.
+// Stable, relational data is normalized; per-game stats live in JSONB whose
+// shape is defined (and validated) by lib/games.ts.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  discordId String   @unique
+  username  String
+  avatarUrl String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  apiKeys  ApiKey[]
+  accounts TrackedAccount[]
+}
+
+model ApiKey {
+  id         String    @id @default(cuid())
+  userId     String
+  name       String    @default("Collector")
+  /// sha256(key) as lowercase hex. The plaintext key is shown once and never stored.
+  keyHash    String    @unique
+  /// First characters of the key, safe to display (e.g. "ct_4f9a2b1c").
+  prefix     String
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+  revokedAt  DateTime?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model TrackedAccount {
+  id             String    @id @default(cuid())
+  userId         String
+  /// Game slug from lib/games.ts, e.g. "adopt_me".
+  game           String
+  robloxUserId   String
+  displayName    String
+  /// Latest stats for this game; shape defined by lib/games.ts.
+  stats          Json      @db.JsonB
+  lastSeenAt     DateTime
+  /// Last state pushed to dashboards; lets the sweeper emit each offline transition once.
+  online         Boolean   @default(true)
+  lastSnapshotAt DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  user      User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  snapshots StatSnapshot[]
+
+  @@unique([userId, game, robloxUserId])
+  @@index([userId, game])
+  @@index([online, lastSeenAt])
+}
+
+model StatSnapshot {
+  id               String   @id @default(cuid())
+  trackedAccountId String
+  stats            Json     @db.JsonB
+  capturedAt       DateTime @default(now())
+
+  trackedAccount TrackedAccount @relation(fields: [trackedAccountId], references: [id], onDelete: Cascade)
+
+  @@index([trackedAccountId, capturedAt])
+}
